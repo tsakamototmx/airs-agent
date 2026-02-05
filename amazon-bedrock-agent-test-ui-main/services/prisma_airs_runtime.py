@@ -4,7 +4,7 @@ import json
 import logging
 import boto3
 
-ssm = boto3.client('ssm')
+ssm = boto3.session.Session().client(service_name="ssm", region_name='us-east-1')
 logger = logging.getLogger(__name__)
 profile = "pae-sec-profile-01"
 
