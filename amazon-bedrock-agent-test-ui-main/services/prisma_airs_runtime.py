@@ -11,7 +11,6 @@ profile = "pae-sec-profile-01"
 
 def request_airs(prompt):
     try:
-
         res = ssm.get_parameter(
             Name='/airs/key',
             WithDecryption=True
@@ -34,7 +33,8 @@ def request_airs(prompt):
                     "ai_model": "Test AI model",
                     "app_name": "pae-app-01", 
                     "app_user": "test-user-1"
-            }
+            },
+            "tr_id": "1234"
         }
 
         header = {'x-pan-token': key}
