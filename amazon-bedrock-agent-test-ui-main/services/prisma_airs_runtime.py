@@ -30,11 +30,9 @@ def request_airs(prompt):
                 "profile_name": profile
                 },
             "metadata": {
-                    "ai_model": "Test AI model",
+                    "ai_model": "AWS Nova Pro 1.0",
                     "app_name": "pae-app-01", 
-                    "app_user": "test-user-1"
             },
-            "tr_id": "1234"
         }
 
         header = {'x-pan-token': key}
