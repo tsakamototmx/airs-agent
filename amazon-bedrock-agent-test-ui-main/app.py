@@ -13,7 +13,6 @@ agent_id = 'PNQ13VY5SC'        #4 Add Agent ID
 agent_alias_id = 'TWNG6FMAXN'  #5 Add Agent Alias ID
 ui_title =  "Welcome to Hotel Booking Agent"
 ui_icon = "BEDROCK_AGENT_TEST_UI_ICON"
-airs_res = {}
 
 def init_session_state():
     st.session_state.session_id = str(uuid.uuid4())
@@ -86,7 +85,7 @@ if prompt := st.chat_input():
             st.session_state.trace = response["trace"]
             st.markdown(output_text, unsafe_allow_html=True)
 
-st.markdown(airs_res)
+st.markdown(airs_res, unsafe_allow_html=True)
 
 trace_types_map = {
     "Pre-Processing": ["preGuardrailTrace", "preProcessingTrace"],
