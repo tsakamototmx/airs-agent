@@ -49,13 +49,17 @@ if prompt := st.chat_input():
                 #Prisma AIRS API request
                 airs_res = prisma_airs_runtime.request_airs(prompt)
 
-                response = bedrock_agent_runtime.invoke_agent(
-                    agent_id,
-                    agent_alias_id,
-                    st.session_state.session_id,
-                    prompt
-                )
-            output_text = response["output_text"]
+                # もしAIRSのレスポンスのactionがブロックならBedrockエージェントの実行はしない 
+                if airs_res['action'] == "allow":
+                    response = bedrock_agent_runtime.invoke_agent(
+                        agent_id,
+                        agent_alias_id,
+                        st.session_state.session_id,
+                        prompt
+                    )
+                    output_text = response["output_text"]
+                else:
+                    output_text = "入力されたプロンプトは違反としてブロックしました。"
 
             # Check if the output is a JSON object with the instruction and result fields
             try:
