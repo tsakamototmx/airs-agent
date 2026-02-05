@@ -59,6 +59,10 @@ if prompt := st.chat_input():
                     )
                     output_text = response["output_text"]
                 else:
+                    response = {
+                        "citations" : "",
+                        "trace": "",
+                    }
                     output_text = "入力されたプロンプトは違反としてブロックしました。"
 
             # Check if the output is a JSON object with the instruction and result fields
@@ -89,7 +93,7 @@ if prompt := st.chat_input():
             st.session_state.trace = response["trace"]
             st.markdown(output_text, unsafe_allow_html=True)
 
-st.markdown(airs_res, unsafe_allow_html=True)
+#st.markdown(airs_res, unsafe_allow_html=True)
 
 trace_types_map = {
     "Pre-Processing": ["preGuardrailTrace", "preProcessingTrace"],
