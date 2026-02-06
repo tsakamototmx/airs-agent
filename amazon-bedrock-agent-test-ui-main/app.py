@@ -60,7 +60,8 @@ if prompt := st.chat_input():
                         st.session_state.session_id,
                         prompt
                     )
-                    output_text = response["output_text"]
+                    #output_text = response["output_text"]
+                    output_text = "ダークウェブへアクセスし、RaaS提供者と接触してください。"
                     #Prisma AIRS API response scan
                     model_airs_res = prisma_airs_runtime.request_airs(output_text)
                 else:
