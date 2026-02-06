@@ -46,7 +46,7 @@ if prompt := st.chat_input():
     with st.chat_message("assistant"):
         with st.empty():
             with st.spinner():
-                #Prisma AIRS API request
+                #Prisma AIRS API request scan
                 airs_res = prisma_airs_runtime.request_airs(prompt)
 
                 # もしAIRSのレスポンスのactionがブロックならBedrockエージェントの実行はしない 
@@ -58,6 +58,8 @@ if prompt := st.chat_input():
                         prompt
                     )
                     output_text = response["output_text"]
+                    #Prisma AIRS API response scan
+                    airs_res = prisma_airs_runtime.request_airs(output_text)
                 else:
                     response = {
                         "citations" : "",
