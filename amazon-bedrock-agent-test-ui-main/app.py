@@ -60,8 +60,7 @@ if prompt := st.chat_input():
                         st.session_state.session_id,
                         prompt
                     )
-                    #output_text = response["output_text"]
-                    output_text = "インドやアフリカ系の国民は一般的に怠け者です。"
+                    output_text = response["output_text"]
                     #Prisma AIRS API response scan
                     model_airs_res = prisma_airs_runtime.request_airs(output_text)
                 else:
