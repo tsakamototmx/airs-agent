@@ -37,6 +37,9 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"], unsafe_allow_html=True)
 
+model_airs_res = {}
+user_airs_res = {}
+
 # Chat input that invokes the agent
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -47,10 +50,10 @@ if prompt := st.chat_input():
         with st.empty():
             with st.spinner():
                 #Prisma AIRS API request scan
-                airs_res = prisma_airs_runtime.request_airs(prompt)
+                user_airs_res = prisma_airs_runtime.request_airs(prompt)
 
                 # もしAIRSのレスポンスのactionがブロックならBedrockエージェントの実行はしない 
-                if airs_res['action'] == "allow":
+                if user_airs_res['action'] == "allow":
                     response = bedrock_agent_runtime.invoke_agent(
                         agent_id,
                         agent_alias_id,
@@ -59,7 +62,7 @@ if prompt := st.chat_input():
                     )
                     output_text = response["output_text"]
                     #Prisma AIRS API response scan
-                    airs_res = prisma_airs_runtime.request_airs(output_text)
+                    model_airs_res = prisma_airs_runtime.request_airs(output_text)
                 else:
                     response = {
                         "citations" : "",
@@ -95,7 +98,7 @@ if prompt := st.chat_input():
             st.session_state.trace = response["trace"]
             st.markdown(output_text, unsafe_allow_html=True)
 
-#st.markdown(airs_res, unsafe_allow_html=True)
+st.markdown(model_airs_res, unsafe_allow_html=True)
 
 trace_types_map = {
     "Pre-Processing": ["preGuardrailTrace", "preProcessingTrace"],
