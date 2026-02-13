@@ -99,6 +99,7 @@ if prompt := st.chat_input():
             st.markdown(output_text, unsafe_allow_html=True)
 
 st.markdown(model_airs_res, unsafe_allow_html=True)
+st.markdown(prompt, unsafe_allow_html=True)
 
 trace_types_map = {
     "Pre-Processing": ["preGuardrailTrace", "preProcessingTrace"],
