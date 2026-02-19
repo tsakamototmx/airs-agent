@@ -51,24 +51,30 @@ if prompt := st.chat_input():
             with st.spinner():
                 #Prisma AIRS API request scan
                 user_airs_res = prisma_airs_runtime.request_airs(prompt)
-
+                response = bedrock_agent_runtime.invoke_agent(
+                    agent_id,
+                    agent_alias_id,
+                    st.session_state.session_id,
+                    prompt
+                )
+                output_text = response["output_text"]
                 # もしAIRSのレスポンスのactionがブロックならBedrockエージェントの実行はしない 
-                if user_airs_res['action'] == "allow":
-                    response = bedrock_agent_runtime.invoke_agent(
-                        agent_id,
-                        agent_alias_id,
-                        st.session_state.session_id,
-                        prompt
-                    )
-                    output_text = response["output_text"]
-                    #Prisma AIRS API response scan
-                    model_airs_res = prisma_airs_runtime.request_airs(output_text)
-                else:
-                    response = {
-                        "citations" : "",
-                        "trace": "",
-                    }
-                    output_text = "入力されたプロンプトは違反としてブロックしました。"
+                # if user_airs_res['action'] == "allow":
+                #     response = bedrock_agent_runtime.invoke_agent(
+                #         agent_id,
+                #         agent_alias_id,
+                #         st.session_state.session_id,
+                #         prompt
+                #     )
+                #     output_text = response["output_text"]
+                #     #Prisma AIRS API response scan
+                #     model_airs_res = prisma_airs_runtime.request_airs(output_text)
+                # else:
+                #     response = {
+                #         "citations" : "",
+                #         "trace": "",
+                #     }
+                #     output_text = "入力されたプロンプトは違反としてブロックしました。"
 
             # Check if the output is a JSON object with the instruction and result fields
             try:
@@ -99,7 +105,7 @@ if prompt := st.chat_input():
             st.markdown(output_text, unsafe_allow_html=True)
 
 st.markdown(model_airs_res, unsafe_allow_html=True)
-st.markdown(prompt, unsafe_allow_html=True)
+# st.markdown(prompt, unsafe_allow_html=True)
 
 trace_types_map = {
     "Pre-Processing": ["preGuardrailTrace", "preProcessingTrace"],
