@@ -57,7 +57,7 @@ if prompt := st.chat_input():
                     st.session_state.session_id,
                     prompt
                 )
-                output_text = response["output_text"]
+            output_text = response["output_text"]
                 # もしAIRSのレスポンスのactionがブロックならBedrockエージェントの実行はしない 
                 # if user_airs_res['action'] == "allow":
                 #     response = bedrock_agent_runtime.invoke_agent(
